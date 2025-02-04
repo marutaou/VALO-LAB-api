@@ -12,7 +12,7 @@ datasource db {
 
 model AirstrikePost {
   id Int @id @default(autoincrement())
-  authorId String
+  authorId Int
   map String
   agent String
   title String
@@ -35,17 +35,18 @@ model AirstrikePost {
 }
 
 model User {
-  userId String @unique
+  userId Int @id @default(autoincrement())
   username String
-  password String
+  userEmail String @unique
   posrts AirstrikePost[]
   airstrikeFavmanager AirstrikeFavoriteManager[]
 }
 
 model AirstrikeFavoriteManager {
-  id Int @id @default(autoincrement())
-  userId String
+  @@id([userId, postId]) //複合キー
+  userId Int
   postId Int
   user User @relation(fields: [userId], references: [userId])
   post AirstrikePost @relation(fields: [postId], references: [id])
+  
 }
