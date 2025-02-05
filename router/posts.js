@@ -44,7 +44,13 @@ router.get("/AirstrikeListData/:mapName?", async (req, res) => {
 		const latestAirstrikePost = await prisma.airstrikePost.findMany({
 			where: { map: mapName },
 			include: {
-				author: true,
+				author: {
+					select: {
+						userId: true,
+						username: true,
+						userEmail: true,
+					},
+				},
 			},
 		});
 		console.log("Query result:", latestAirstrikePost); // クエリ結果のログ
