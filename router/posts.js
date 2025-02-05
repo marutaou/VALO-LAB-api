@@ -48,7 +48,6 @@ router.get("/AirstrikeListData/:mapName?", async (req, res) => {
 					select: {
 						userId: true,
 						username: true,
-						userEmail: true,
 					},
 				},
 			},
