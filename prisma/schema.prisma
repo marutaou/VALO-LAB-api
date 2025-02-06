@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,42 +8,42 @@ datasource db {
 }
 
 model AirstrikePost {
-  id Int @id @default(autoincrement())
-  authorId Int
-  map String
-  agent String
-  title String
-  comment String
-  placename String
-  posture String
-  charge String?
-  bounce String?
-  throwing String?
+  id                    Int                        @id @default(autoincrement())
+  map                   String
+  agent                 String
+  title                 String
+  comment               String
+  placename             String
+  posture               String
+  bounce                String?
   standingPositionImage String
-  landmarkImage String
-  firingPinX Float?
-  firingPinY Float?
-  fallingPinX Float?
-  fallingPinY Float?
-  favorite Int @default(0)
-  createdAt DateTime @default(now())
-  author User @relation(fields: [authorId], references: [userId])
-  favManager AirstrikeFavoriteManager[]
+  landmarkImage         String
+  favorite              Int                        @default(0)
+  createdAt             DateTime                   @default(now())
+  throwing              String?
+  charge                String?
+  fallingPinX           Float?
+  fallingPinY           Float?
+  firingPinX            Float?
+  firingPinY            Float?
+  authorId              Int
+  favManager            AirstrikeFavoriteManager[]
+  author                User                       @relation(fields: [authorId], references: [userId])
 }
 
 model User {
-  userId Int @id @default(autoincrement())
-  username String
-  userEmail String @unique
-  posrts AirstrikePost[]
+  username            String
+  userId              Int                        @id @default(autoincrement())
+  userEmail           String                     @unique
   airstrikeFavmanager AirstrikeFavoriteManager[]
+  posrts              AirstrikePost[]
 }
 
 model AirstrikeFavoriteManager {
-  @@id([userId, postId]) //複合キー
-  userId Int
   postId Int
-  user User @relation(fields: [userId], references: [userId])
-  post AirstrikePost @relation(fields: [postId], references: [id])
-  
+  userId Int
+  post   AirstrikePost @relation(fields: [postId], references: [id])
+  user   User          @relation(fields: [userId], references: [userId])
+
+  @@id([userId, postId])
 }
